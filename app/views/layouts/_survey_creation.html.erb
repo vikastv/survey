@@ -13,6 +13,7 @@
         <tr  class="tablesorter-headerRow " role="row">
           <th>Sl.No</th>
           <th>Title</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,10 @@
           <tr>
             <td><%= i + 1 %></td>
             <td><%= survey.name %></td>
+            <td>
+              <%#= link_to "Delete", wallet_path(:id => wallet.id), data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-small btn-danger" %>
+              <a id="btn_<%= survey.id %>" surveyname="<%= survey.name %>" surveyid="<%= survey.id %>" href="" data-dismiss="modal" class="edit_survey btn btn-small btn-primary" id="InfroTextSubmit1"  data-toggle="modal" data-target="#myModaledit" value="<%= survey.id %>" >edit</a>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -48,13 +53,39 @@
       </div>
     </div>
   </div>
+  <!-- FOR EDITING MODAL WINDOW -->
+  <div class="modal fade" id="myModaledit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" align="left">Edit Survey</h4>
+        </div>
+        <%= form_tag('/admin/surveys/update_name', :method => 'put', :id => "InfroTextSubmit1") do %>
+          <div class="modal-body" align="left">
+            <div style="display:inline-block;">
+              Name: <input id="edit_name" name="name" type="text" placeholder="" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <input id="survey_id" type="hidden" class="survey_destroy" name="id" value="" >
+            <%= submit_tag 'Yes', :class => "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#survey_add").click(function() {
-      alert("hello");
-      $("#myModal").show();
+    $(".edit_survey").click(function() {
+      var survey_name = $(this).attr("surveyname");
+      var survey_id = $(this).attr("surveyid")
+
+      $("#edit_name").val(survey_name);
+      $("#survey_id").val(survey_id);
     });
   });
 </script>

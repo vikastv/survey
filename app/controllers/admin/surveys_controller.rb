@@ -18,6 +18,21 @@ class Admin::SurveysController < Admin::BaseController
     end
   end
 
+  def update_name
+    survey_id = params[:id]
+    survey_name = params[:name]
+
+    survey = SurveyList.find(survey_id)
+    if !survey.nil?
+      survey.update_attributes(:name => survey_name)
+      flash[:success] = "Survey updated successfully."
+      redirect_to admin_root_path
+    else
+      flash[:error] = "Failed to update survey."
+      redirect_to admin_root_path
+    end
+  end
+
   private
   def survey_params
     params.require(:survey_list).permit(:name)
