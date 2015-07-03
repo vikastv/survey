@@ -1,8 +1,4 @@
 class Admin::SurveysController < Admin::BaseController
-  def new
-    @survey = SurveyList.new
-  end
-
   def create
     survey_name = params[:name]
     survey_params = {:name => survey_name}
