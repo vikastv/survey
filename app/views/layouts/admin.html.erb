@@ -7,7 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<%= yield %>
+  <div class="survey_wrapper">
+    <div style="background: #222222;" class="survey_header">
+    <% if current_admin %>
+      <div class="pull-right margin-right-default"><%= link_to "Sign out", destroy_admin_session_path, method: :delete %>
+      </div>
+    <% end %>
+      <div style="margin-left: 250px; color: #F8AB08; padding: 10px;">
+        <h3>Survey Admin</h3>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="container">
+    <%= render :partial => 'layouts/survey_creation' %>
 
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>
