@@ -22,8 +22,8 @@
             <td><%= i + 1 %></td>
             <td><%= survey.name %></td>
             <td>
-              <%#= link_to "Delete", wallet_path(:id => wallet.id), data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-small btn-danger" %>
               <a id="btn_<%= survey.id %>" surveyname="<%= survey.name %>" surveyid="<%= survey.id %>" href="" data-dismiss="modal" class="edit_survey btn btn-small btn-primary" id="InfroTextSubmit1"  data-toggle="modal" data-target="#myModaledit" value="<%= survey.id %>" >edit</a>
+              <%= link_to "Delete", admin_survey_path(:id => survey.id), data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-small btn-danger" %>
             </td>
           </tr>
         <% end %>

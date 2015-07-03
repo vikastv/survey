@@ -19,9 +19,13 @@
       <div class="clear"></div>
     </div>
     <div class="container">
-    <%= render :partial => 'layouts/survey_creation' %>
-
-      <%= yield %>
+      <% flash.each do |type, message| %>
+        <div class="alert <%= bootstrap_class_for(type) %> fade in">
+          <button class="close" data-dismiss="alert">×</button>
+          <%= message %>
+        </div>
+      <% end %>
+      <%= render :partial => 'layouts/survey_creation' %>
     </div>
   </div>
 </body>

@@ -33,6 +33,19 @@ class Admin::SurveysController < Admin::BaseController
     end
   end
 
+  def destroy
+    survey_id = params[:id]
+    survey = SurveyList.find(survey_id)
+    if !survey.nil?
+      survey.destroy
+      flash[:success] = "Survey deleted successfully."
+      redirect_to admin_root_path
+    else
+      flash[:error] = "Failed to delete survey."
+      redirect_to admin_root_path
+    end
+  end
+
   private
   def survey_params
     params.require(:survey_list).permit(:name)
