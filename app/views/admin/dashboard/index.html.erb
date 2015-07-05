@@ -1,0 +1,91 @@
+<div class="survey_container">
+  <div class="header">
+    <div class="pull-right">
+      <a href="" data-dismiss="modal" id="InfroTextSubmit" data-toggle="modal" data-target="#myModal">Add Survey</a>
+    </div>
+  </div>
+  <div class=clear></div>
+  <h3>Surveys List</h3>
+
+  <div class="survey_list">
+    <table class="table table-striped table-bordered container tablesorter">
+      <thead>
+        <tr  class="tablesorter-headerRow " role="row">
+          <th>Sl.No</th>
+          <th>Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @surveys.each_with_index do |survey, i| %>
+          <tr>
+            <td><%= i + 1 %></td>
+            <td><%= link_to survey.name, admin_survey_path(survey.id) %></td>
+            <td>
+              <a id="btn_<%= survey.id %>" surveyname="<%= survey.name %>" surveyid="<%= survey.id %>" href="" data-dismiss="modal" class="edit_survey btn btn-small btn-primary" id="InfroTextSubmit1"  data-toggle="modal" data-target="#myModaledit" value="<%= survey.id %>" >edit</a>
+              <%= link_to "Delete", admin_survey_path(:id => survey.id), data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-small btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @surveys, renderer: BootstrapPagination::Rails %>
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" align="left">Add Survey</h4>
+        </div>
+        <%= form_tag("/admin/surveys", :html => { :method => :post , id: "InfroText", class: "form-horizontal" }) do %>
+          <div class="modal-body" align="left">
+          <div style="display:inline-block;">
+            Name : <input id="name" name="name" type="text" placeholder="Enter wallet name" />
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <%= submit_tag 'Yes', :class => "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- FOR EDITING MODAL WINDOW -->
+  <div class="modal fade" id="myModaledit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" align="left">Edit Survey</h4>
+        </div>
+        <%= form_tag('/admin/surveys/update_name', :method => 'put', :id => "InfroTextSubmit1") do %>
+          <div class="modal-body" align="left">
+            <div style="display:inline-block;">
+              Name: <input id="edit_name" name="name" type="text" placeholder="" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <input id="survey_id" type="hidden" class="survey_destroy" name="id" value="" >
+            <%= submit_tag 'Yes', :class => "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".edit_survey").click(function() {
+      var survey_name = $(this).attr("surveyname");
+      var survey_id = $(this).attr("surveyid")
+
+      $("#edit_name").val(survey_name);
+      $("#survey_id").val(survey_id);
+    });
+  });
+</script>

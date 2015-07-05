@@ -46,6 +46,12 @@ class Admin::SurveysController < Admin::BaseController
     end
   end
 
+  def show
+    survey_id = params[:id]
+    @survey = SurveyList.find_by_id(survey_id)
+    @questions = @survey.questions.all
+  end
+
   private
   def survey_params
     params.require(:survey_list).permit(:name)

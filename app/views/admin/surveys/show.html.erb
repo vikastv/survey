@@ -1,0 +1,46 @@
+<div class="survey_question_container">
+  <h3><%= @survey.name %></h3>
+  <div class="pull-left">
+    Question Count: <%= @questions.count %>
+  </div>
+  <div class="pull-right">
+    <a href="" data-dismiss="modal" id="InfroTextSubmit" data-toggle="modal" data-target="#myModal">Add Question</a>
+  </div>
+  <div class="clear"></div>
+  <% @questions.each_with_index do |question, i| %>
+    <div class="well">
+      <div class="display-inline">
+        <%= i + 1 %> . <%= question.question %> <br />
+        Type: <%= question.question_type %>
+        <a href="" data-dismiss="modal" id="InfroTextSubmit" data-toggle="modal" data-target="#myModal" class="pull-right">Edit Question</a>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- FOR ADDING MODAL -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" align="left">Add Question</h4>
+        </div>
+        <%= form_tag("/admin/questions", :html => { :method => :post , id: "InfroText", class: "form-horizontal" }) do %>
+          <input type="hidden" name="survey_id" value=<%= @survey.id %>>
+          <div class="modal-body" align="left">
+            <div style="display:inline-block;">
+              Name : <input id="question" name="question" type="text" placeholder="Enter question" />
+            </div>
+            <div style="display:inline-block;">
+              Question Type : <%= select_tag(:question_type, options_from_collection_for_select(Question::Type.constants, :to_s, :to_s)) %>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <%= submit_tag 'Yes', :class => "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,11 +7,13 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   namespace :admin do
     root to: "dashboard#index"
-    resources :surveys, :only => [:new, :create, :destroy] do
+    resources :surveys, :only => [:create, :destroy, :show] do
       collection do
         put :update_name
       end
     end
+
+    resources :questions, :only => [:create]
   end
 
   root 'home#index'
