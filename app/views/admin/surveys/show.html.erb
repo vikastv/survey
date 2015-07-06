@@ -12,7 +12,7 @@
       <div class="display-inline">
         <%= i + 1 %> . <%= question.question %> <br />
         Type: <%= question.question_type %>
-        <a href="" data-dismiss="modal" id="InfroTextSubmit" data-toggle="modal" data-target="#myModal" class="pull-right">Edit Question</a>
+        <a id="btn_<%= question.id %>" question="<%= question.question %>" questionid="<%= question.id %>" questiontype="<%= question.question_type %>" surveyid="<%= @survey.id %>" href="" data-dismiss="modal" id="InfroTextSubmit" data-toggle="modal" data-target="#myModaledit" class="pull-right edit_question">Edit Question</a>
       </div>
     </div>
   <% end %>
@@ -32,7 +32,7 @@
               Name : <input id="question" name="question" type="text" placeholder="Enter question" />
             </div>
             <div style="display:inline-block;">
-              Question Type : <%= select_tag(:question_type, options_from_collection_for_select(Question::Type.constants, :to_s, :to_s)) %>
+              Question Type : <%= select_tag(:question_type, options_from_collection_for_select(Question::Type.constants, :to_s, :to_s),   :class => "add_question") %>
             </div>
           </div>
           <div class="modal-footer">
@@ -43,4 +43,55 @@
       </div>
     </div>
   </div>
+
+  <!-- FOR EDITING MODAL -->
+  <div class="modal fade" id="myModaledit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" align="left">Edit Question</h4>
+        </div>
+        <%= form_tag('/admin/questions/update_question', :method => 'put', :id => "InfroTextSubmit1") do %>
+          <div class="modal-body" align="left">
+            <div style="display:inline-block;">
+              Name : <input id="question_text" name="question" type="text" placeholder="Enter question" />
+            </div>
+            <div style="display:inline-block;">
+              Question Type : <%= select_tag(:question_type, options_from_collection_for_select(Question::Type.constants, :to_s, :to_s),:class => "question_type_text") %>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="edit_no_button" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <input id="survey_id" type="hidden" class="" name="survey_id" value="" >
+            <input id="question_id" type="hidden" class="" name="question_id" value="" >
+            <%= submit_tag 'Yes', :class => "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#edit_no_button").click(function() {
+      $('#question_type').find($('option')).attr('selected',false);
+    });
+
+    $(".edit_question").click(function() {
+      var question = $(this).attr("question");
+      var question_type = $(this).attr("questiontype");
+      var survey_id = $(this).attr("surveyid");
+      var question_id = $(this).attr("questionid");
+
+
+      $("#question_text").val(question);
+      // $("#question_type " + "[value=" + question_type + "]").attr("selected", "selected");
+
+      $("#survey_id").val(survey_id);
+      $("#question_id").val(question_id);
+    });
+  });
+</script>

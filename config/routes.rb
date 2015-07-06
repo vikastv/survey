@@ -13,7 +13,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :questions, :only => [:create]
+    resources :questions, :only => [:create] do
+      collection do
+        put :update_question
+      end
+    end
   end
 
   root 'home#index'

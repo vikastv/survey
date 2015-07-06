@@ -49,7 +49,7 @@ class Admin::SurveysController < Admin::BaseController
   def show
     survey_id = params[:id]
     @survey = SurveyList.find_by_id(survey_id)
-    @questions = @survey.questions.all
+    @questions = @survey.questions.order(:id).all
   end
 
   private
