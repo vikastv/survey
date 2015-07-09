@@ -14,6 +14,7 @@
           <th>Sl.No</th>
           <th>Title</th>
           <th>Actions</th>
+          <th>Responses</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,11 @@
               <a id="btn_<%= survey.id %>" surveyname="<%= survey.name %>" surveyid="<%= survey.id %>" href="" data-dismiss="modal" class="edit_survey btn btn-small btn-primary" id="InfroTextSubmit1"  data-toggle="modal" data-target="#myModaledit" value="<%= survey.id %>" >edit</a>
               <%= link_to "Delete", admin_survey_path(:id => survey.id), data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-small btn-danger" %>
             </td>
+            <% if survey.responses.count > 0 %>
+              <td><%= link_to "Responses", survey_responses_admin_dashboard_index_path(:id => survey.id) %></td>
+            <% else %>
+              <td>No Responses</td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

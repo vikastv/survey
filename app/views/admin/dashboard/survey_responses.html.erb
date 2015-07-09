@@ -1,0 +1,16 @@
+<h3>Surveys Responses</h3>
+Total Response : <%= @responses.count %>
+<br/>
+<br/>
+<div class="survey_responses">
+  <table class="table">
+    <% @responses.each do |response| %>
+      <tbody>
+        <tr style="Margin-top;10px;">
+          <%= response.response.split("_").drop(1).join("---") %>
+          <br/>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>

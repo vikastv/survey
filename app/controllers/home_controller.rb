@@ -16,6 +16,7 @@ class HomeController < ApplicationController
     user_id = current_user.id
     survey_id = params[:survey_id]
     answer_params = []
+    res_val = "#{survey_id}"
 
     data = params[:q]
     data.each do |key,val|
@@ -25,9 +26,12 @@ class HomeController < ApplicationController
       answer_build[:survey_list_id] = survey_id
       answer_build[:answer] = val
 
+      res_val = res_val + "_" + val
       answer_params << answer_build
     end
+
     answer = Answer.create(answer_params)
+    response = Response.create(:response => res_val, :survey_list_id => survey_id, :user_id =>user_id)
     flash[:success] = "Survey completed successfully."
     redirect_to root_path
   end
