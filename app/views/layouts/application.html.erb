@@ -6,10 +6,27 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-<h2>Survey App</h2>
-<div class="pull-right margin-right-default"><%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-<%= yield %>
+<body><div class="survey_wrapper">
+    <div style="background: #222222;" class="survey_header">
+    <% if current_user %>
+      <div class="pull-right margin-right-default"><%= link_to "Sign out", destroy_admin_session_path, method: :delete %>
+      </div>
+    <% end %>
+      <div style="margin-left: 250px; color: #F8AB08; padding: 10px;">
+        <a href="/"><h3>Survey</h3></a>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="container">
+      <% flash.each do |type, message| %>
+        <div class="alert <%= bootstrap_class_for(type) %> fade in">
+          <button class="close" data-dismiss="alert">×</button>
+          <%= message %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
+  </div>
 
 </body>
 </html>

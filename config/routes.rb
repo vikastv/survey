@@ -21,7 +21,12 @@ Rails.application.routes.draw do
   end
 
   root 'home#index'
-
+  resources :home, :only => [] do
+    collection do
+      post :answer
+      post :answer_submit
+    end
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

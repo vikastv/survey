@@ -1,0 +1,40 @@
+<div class="survey_question_container">
+  <h3><%= @survey.name %></h3>
+  <div class="pull-left">
+    Question Count: <b><%= @questions.count %></b>
+  </div>
+  <div class="clear"></div>
+  <%= form_tag('/home/answer_submit', method: :post) do %>
+    <% @questions.each_with_index do |question, i| %>
+      <div class="well">
+        <div class="display-inline">
+          <%= i + 1 %> . <%= question.question %> <br />
+            <% if question.question_type == "Numeric" %>
+              <%= build_number_field(question.id) %>
+            <% elsif question.question_type == "EssayOrText" %>
+              <%= build_text_field(question.id) %>
+            <% elsif question.question_type == "DateTime" %>
+              <%= build_date_field(question.id) %>
+            <% end %>
+        </div>
+      </div>
+      <input type="hidden" name="survey_id" value=<%= question.survey_list_id %> >
+    <% end %>
+    <%= submit_tag 'Go', :class => "btn btn-primary btn-small", :id => "anser_submit", :style => "margin-bottom: 10px;" %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('input.ui-date-picker').datepicker();
+    $('input.ui-date-picker').datepicker().on('changeDate', function(e){
+      $('input.ui-date-picker').datepicker('hide');
+    });
+  });
+
+  function forceNumeric(){
+    var $input = $(this);
+    $input.val($input.val().replace(/[^\d]+/g,''));
+  }
+  $('body').on('propertychange input', 'input[type="number"]', forceNumeric);
+</script>
