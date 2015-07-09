@@ -15,14 +15,14 @@ module ApplicationHelper
   end
 
   def build_number_field(question_id)
-    tag(:input, :type => "number", :name =>"q[#{question_id}]", :id => "question_#{question_id}")
+    tag(:input, :type => "number", :name =>"q[#{question_id}]", :id => "question_number")
   end
 
   def build_text_field(question_id)
-    tag(:input, :type => "text", :name => "q[#{question_id}]", :id => "question_#{question_id}")
+    tag(:input, :type => "text", :name => "q[#{question_id}]", :id => "question_text")
   end
 
   def build_date_field(question_id)
-    tag(:input, :class => "ui-date-picker hasDatepicker", :id =>"q_created_at_lteq",:type => "text", :name => "q[created_at_lteq]", :size => "30" )
+    tag(:input, :class => "ui-date-picker hasDatepicker", :id =>"question_date",:type => "text", :name => "q[#{question_id}]", :size => "30" )
   end
 end

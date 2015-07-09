@@ -4,7 +4,7 @@
     Question Count: <b><%= @questions.count %></b>
   </div>
   <div class="clear"></div>
-  <%= form_tag('/home/answer_submit', method: :post) do %>
+  <%= form_tag('/home/answer_submit', method: :post, :id => "answer_submission_form") do %>
     <% @questions.each_with_index do |question, i| %>
       <div class="well">
         <div class="display-inline">
@@ -20,7 +20,7 @@
       </div>
       <input type="hidden" name="survey_id" value=<%= question.survey_list_id %> >
     <% end %>
-    <%= submit_tag 'Go', :class => "btn btn-primary btn-small", :id => "anser_submit", :style => "margin-bottom: 10px;" %>
+    <div class="btn btn-primary btn-small", id="answer_submit", style="margin-bottom: 10px;">Submit</div>
   <% end %>
 </div>
 
@@ -29,6 +29,24 @@
     $('input.ui-date-picker').datepicker();
     $('input.ui-date-picker').datepicker().on('changeDate', function(e){
       $('input.ui-date-picker').datepicker('hide');
+    });
+
+    $('#answer_submit').click(function() {
+      var empty_input = false;
+      $("#answer_submission_form").find(':input').each(function(i){
+        if ($(this).val() == "") {
+          empty_input = true;
+          return false;
+        }
+      });
+
+      if(empty_input == true) {
+        alert("Please fill all the field. All question are compulsary.");
+      }
+      else if( empty_input == false) {
+        alert("Thank you.");
+        $("#answer_submission_form").submit();
+      }
     });
   });
 
