@@ -23,6 +23,6 @@ module ApplicationHelper
   end
 
   def build_date_field(question_id)
-    tag(:input, :class => "ui-date-picker hasDatepicker", :id =>"question_date",:type => "text", :name => "q[#{question_id}]", :size => "30" )
+    tag(:input, :class => "ui-date-picker hasDatepicker", :id =>"question_date",:type => "text", :name => "q[#{question_id}]", :size => "30", :readonly => "" )
   end
 end
